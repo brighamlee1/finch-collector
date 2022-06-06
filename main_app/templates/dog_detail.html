@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h2>{{dog.name}}</h2>
+    <img class="dog-image" src="{{dog.image}}" alt="{{dog.name}}">
+
+    <form action="{% url 'puppy_create' dog.pk %}" method="post">
+        {% csrf_token %}
+        <div>
+            <div>
+                <input type="text" name="name" placeholder="Name" required />
+            </div>
+            <div>
+                <input type="number" name="age" placeholder="Age in years" min="1" required />
+            </div>
+            <div>
+                <input type="submit" value="Add Puppy" />
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <h3>Puppies</h3>
+
+        {% for puppy in dog.puppies.all %}
+        <div>
+            <span><b>{{puppy.name}} - </b></span>
+            {% if puppy.age > 1 %}
+            <span>{{puppy.age}} years old</span>
+            {% else %}
+            <span>{{puppy.age}} year old</span>
+            {% endif %}
+
+            <span>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for litter in litters %}
+                        <a href="{% url 'litter_puppy_assoc' litter.pk puppy.pk %}?assoc=add" class="dropdown-item">
+                            {{litter.title}}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </span>
+        </div>
+
+        {% empty %}
+        <article>
+            <div>
+                <p>No puppy available</p>
+            </div>
+        </article>
+
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'dog_update' dog.pk %}">Update</a>
+    </a>
+    <a href="{% url 'dog_delete' dog.pk %}" class="button is-danger">Delete
+    </a>
+</div>
+{% endblock %}

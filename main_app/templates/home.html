@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    {% for litter in litters %}
+
+    <div>
+        <h3>{{litter.title}}</h3>
+        <hr />
+
+        {% for puppy in litter.puppies.all %}
+        <div>
+            <span><b>{{puppy.name}} - </b></span>
+            {% if puppy.age > 1 %}
+            <span>{{puppy.age}} years old</span>
+            {% else %}
+            <span>{{puppy.age}} year old</span>
+            {% endif %}
+            <a href="{% url 'litter_puppy_assoc' litter.pk puppy.pk %}?assoc=remove">remove
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% empty %}
+    <article>
+        <div>
+            <p>No puppy available</p>
+        </div>
+    </article>
+
+    {% endfor %}
+</div>
+{% endblock %}

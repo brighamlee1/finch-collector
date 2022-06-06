@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(30, 32, 46);
+}
+
+nav {
+    height: 70px;
+}
+
+h1, h2, h3, p, span, li {
+    color: rgb(230, 230, 230);
+}
+
+.dog-image {
+    height: auto;
+    width: 600px;
+    transition: .3s;
+}
+
+.dog-image:hover {
+    transform: scale(1.03);
+    z-index: 10;
+}
+
+div .label {
+    color: rgb(230, 230, 230);
+}
